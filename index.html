@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- 한국어 문서를 기본 언어로 설정합니다 -->
+<html lang="ko">
+<head>
+  <!-- 문자 인코딩을 UTF-8로 지정합니다 -->
+  <meta charset="UTF-8" />
+  <!-- 모바일 및 다양한 기기 크기 대응을 위한 뷰포트 설정입니다 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 웹앱 제목 설정입니다 -->
+  <title>실시간 대기오염 정보 - 공기 신호등</title>
+  <!-- 눈이 편안한 Pretendard 웹 폰트를 불러옵니다 -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <!-- 외부 스타일시트(style.css)를 연결합니다 -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- 그래프 시각화를 위한 Chart.js CDN 라이브러리를 불러옵니다 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- 전체 컨텐츠를 담는 최상위 컨테이너입니다 -->
+  <div class="app-container">
+    
+    <!-- 상단 헤더 영역입니다 -->
+    <header class="app-header">
+      <!-- 서비스 메인 타이틀입니다 -->
+      <h1>🌤️ 우리 동네 공기 신호등</h1>
+      <!-- 지역 조회를 위한 시도 선택 드롭다운 메뉴입니다 -->
+      <div class="select-box">
+        <label for="sidoSelect">지역 선택:</label>
+        <select id="sidoSelect">
+          <option value="서울" selected>서울</option>
+          <option value="부산">부산</option>
+          <option value="대구">대구</option>
+          <option value="인천">인천</option>
+          <option value="광주">광주</option>
+          <option value="대전">대전</option>
+          <option value="울산">울산</option>
+          <option value="세종">세종</option>
+          <option value="경기">경기</option>
+          <option value="강원">강원</option>
+          <option value="충북">충북</option>
+          <option value="충남">충남</option>
+          <option value="전북">전북</option>
+          <option value="전남">전남</option>
+          <option value="경북">경북</option>
+          <option value="경남">경남</option>
+          <option value="제주">제주</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- 로딩 상태 표시 레이어입니다 -->
+    <div id="loading" class="loading-box">
+      <div class="spinner"></div>
+      <p>데이터를 불러오는 중...</p>
+    </div>
+    <p id="errorMessage" class="error-message" role="alert" hidden></p>
+
+    <!-- 메인 대기 신호등 (대표 대기 상태 표시) 영역입니다 -->
+    <section id="heroCard" class="hero-card grade-unknown">
+      <!-- 측정 시각 정보를 표시하는 레이블입니다 -->
+      <div id="dataTime" class="data-time">측정 시각 정보 불러오는 중...</div>
+      <!-- 대형 대기 상태 이모지 및 등급 텍스트입니다 -->
+      <div class="hero-status">
+        <span id="heroEmoji" class="hero-emoji">⚪</span>
+        <span id="heroGradeText" class="hero-grade-text">측정 대기</span>
+      </div>
+      <!-- 지역 평균 미세먼지 수치입니다 -->
+      <div class="hero-value-box">
+        <span class="label">지역 평균 미세먼지(PM10)</span>
+        <span id="heroAvgValue" class="hero-avg-value">- <small>㎍/㎥</small></span>
+      </div>
+      <!-- 대기 상태에 따른 행동 안내 문구입니다 -->
+      <p id="heroNotice" class="hero-notice">데이터 수신 준비 중입니다.</p>
+    </section>
+
+    <!-- 시도별 상위 10개 측정소 미세먼지 차트 영역입니다 -->
+    <section class="chart-section">
+      <h2>📊 미세먼지 수치 TOP 10 측정소</h2>
+      <div class="chart-wrapper">
+        <canvas id="airChart"></canvas>
+        <p id="chartError" class="chart-error" hidden></p>
+      </div>
+    </section>
+
+    <!-- 측정소별 상세 카드 목록 세션입니다 -->
+    <section class="stations-section">
+      <h2>📍 측정소별 실시간 현황</h2>
+      <!-- 자바스크립트로 카드 요소들이 동적 생성되는 그리드입니다 -->
+      <div id="stationGrid" class="station-grid"></div>
+    </section>
+
+  </div>
+
+  <!-- 외부 자바스크립트(script.js)를 연결합니다 -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# 비밀 환경변수와 로컬 의존성은 저장소에 올리지 않습니다.
+.env.local
+.vercel/
+node_modules/
